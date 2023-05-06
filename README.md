@@ -2,7 +2,7 @@
 API for capturing player and leaderboard stats in json from slippi.gg
 
 ## Dependencies 
-Slippi API requires that you install a chrome driver from [here](https://chromedriver.chromium.org/downloads) in the same directory as all of the other files 
+Slippi API requires that you have chrome installed in its default location and that you install a chrome driver from [here](https://chromedriver.chromium.org/downloads) in the same directory as all of the other files 
 
 ## How to use
 1. Run `python api.py` (Windows) `python3 api.py` (Linux)
