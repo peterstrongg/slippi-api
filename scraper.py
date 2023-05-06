@@ -27,6 +27,7 @@ def __get_player_data(code):
     return (data1.text, data2.text, data3.text)
 
 def __parse_data(d1, d2, d3):
+    # User has multiple characters
     if len(d3) == 9:
         data_dict = {
             "tag" : d1[0],
@@ -39,6 +40,7 @@ def __parse_data(d1, d2, d3):
             "region" : d2[1]
         }
         return data_dict
+    # User has one character
     elif len(d3) == 7:
         data_dict = {
             "tag" : d1[0],
