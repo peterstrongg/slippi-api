@@ -1,3 +1,15 @@
+from flask import Flask
 from scraper import get_info
-print(get_info("pete-235"))
-print(get_info("shim-0"))
+import json
+
+api = Flask(__name__)
+
+@api.route("/player/<code>")
+def get_player_data(code):
+    return json.dumps(get_info(code))
+
+@api.route("/leaderboard")
+def get_leaderboard():
+    return "leaderboard"
+
+api.run()

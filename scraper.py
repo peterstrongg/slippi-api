@@ -27,21 +27,33 @@ def __get_player_data(code):
     return (data1.text, data2.text, data3.text)
 
 def __parse_data(d1, d2, d3):
-    data_dict = {
-        "tag" : d1[0],
-        "code" : d1[1],
-        "rank" : d1[2],
-        "elo" : float(d1[3].split()[0]),
-        "wins" : int(d3[4]),
-        "losses" : int(d3[6]),
-        "total_sets" : int(d3[8]),
-        "region" : d2[1]
-    }
-    return data_dict
+    if len(d3) == 9:
+        data_dict = {
+            "tag" : d1[0],
+            "code" : d1[1],
+            "rank" : d1[2],
+            "elo" : float(d1[3].split()[0]),
+            "wins" : int(d3[4]),
+            "losses" : int(d3[6]),
+            "total_sets" : int(d3[len(d3)-1]),
+            "region" : d2[1]
+        }
+        return data_dict
+    elif len(d3) == 7:
+        data_dict = {
+            "tag" : d1[0],
+            "code" : d1[1],
+            "rank" : d1[2],
+            "elo" : float(d1[3].split()[0]),
+            "wins" : int(d3[2]),
+            "losses" : int(d3[4]),
+            "total_sets" : int(d3[len(d3)-1]),
+            "region" : d2[1]
+        }
+        return data_dict
 
 
 def get_info(code):
     (data1, data2, data3) = __get_player_data(code)
     data = __parse_data(data1.splitlines(), data2.splitlines(), data3.splitlines())
     return data
-    
