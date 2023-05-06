@@ -1,4 +1,3 @@
-from flask import Flask
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
@@ -14,7 +13,7 @@ o.add_argument("--headless")
 # Initialize Driver
 driver = webdriver.Chrome(options=o)
 
-def get_player_data(code):
+def __get_player_data(code):
     url = "https://slippi.gg/user/" + code
     driver.get(url)
 
@@ -27,23 +26,22 @@ def get_player_data(code):
 
     return (data1.text, data2.text, data3.text)
 
-def parse_data(d1, d2, d3):
-    tag = d1[0]
-    code = d1[1]
-    rank = d1[2]
-    elo = float(d1[3].split()[0])
+def __parse_data(d1, d2, d3):
+    data_dict = {
+        "tag" : d1[0],
+        "code" : d1[1],
+        "rank" : d1[2],
+        "elo" : float(d1[3].split()[0]),
+        "wins" : int(d3[4]),
+        "losses" : int(d3[6]),
+        "total_sets" : int(d3[8]),
+        "region" : d2[1]
+    }
+    return data_dict
 
-    region = d2[1]
 
-    wins = int(d3[4])
-    losses = int(d3[6])
-    total_sets = int(d3[8])
-
-    print(wins, losses, total_sets, elo)
-
-
-if __name__ == "__main__":
-    (data1, data2, data3) = get_player_data("pete-235")
-    parse_data(data1.splitlines(), data2.splitlines(), data3.splitlines())
-    driver.quit()
+def get_info(code):
+    (data1, data2, data3) = __get_player_data(code)
+    data = __parse_data(data1.splitlines(), data2.splitlines(), data3.splitlines())
+    return data
     
